@@ -3,19 +3,30 @@ import ReviewsDAO from '../dao/reviewsDAO.js';
 export default class ReviewsController {
     static async apiPostReview(req, res, next) {//apiPostReview method
         try {
+<<<<<<< HEAD
             const movieId = req.body.movie_id;//get info from req.body
             const review = req.body.review;//retrieve field value
+=======
+            const movieId = req.body.movie_id;
+            const review = req.body.review;
+>>>>>>> 25dd4d301caa1c12e44f51a14144dd916e045a1e
             const userInfo = {
                 name: req.body.name,
                 _id: req.body.user_id
             };
             const date = new Date();
+<<<<<<< HEAD
             const ReviewResponse = await ReviewsDAO.addReview(//send info to ReviewsDAO
+=======
+
+            const ReviewResponse = await ReviewsDAO.addReview(
+>>>>>>> 25dd4d301caa1c12e44f51a14144dd916e045a1e
                 movieId,
                 userInfo,
                 review,
                 date
             );
+<<<<<<< HEAD
             res.json({ status: "success " });
         } catch (e) {
             res.status(500).json({ error: e.message });
@@ -37,6 +48,39 @@ export default class ReviewsController {
         const { error } = ReviewResponse
         if (error) {
             res.status.json({ error })
+=======
+            res.json({ status: "success" });
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    }
+
+    static async apiUpdateReview(req, res, next) {
+        try {
+            const reviewId = req.body.review_id;
+            const review = req.body.review;
+            const date = new Date();
+
+            const ReviewResponse = await ReviewsDAO.updateReview(
+                reviewId,
+                req.body.user_id,
+                review,
+                date
+            );
+
+            var { error } = ReviewResponse;
+            if (error) {
+                res.status(400).json({ error }); // Fixed: Added status code 400
+            }
+
+            if (ReviewResponse.modifiedCount === 0) {
+                throw new Error("Unable to update review. User may not be the original poster.");
+            }
+
+            res.json({ status: "success" });
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+>>>>>>> 25dd4d301caa1c12e44f51a14144dd916e045a1e
         }
         if (ReviewResponse.modifiedCount === 0) {//check modifiedCount is not zero
             throw new Error("unable to update review. User may not be original poster")
@@ -45,6 +89,7 @@ export default class ReviewsController {
     } catch (e) {
         res.status(500).json({ error: e.message })
     }
+<<<<<<< HEAD
 }
 
     static async apiDeleteReview(req, res, next) {//apiDeleteReview method
@@ -64,3 +109,31 @@ export default class ReviewsController {
     }
 }
 }
+=======
+
+    static async apiDeleteReview(req, res, next) {
+        try {
+            const reviewId = req.body.review_id;
+            const userId = req.body.user_id;
+
+            const ReviewResponse = await ReviewsDAO.deleteReview(
+                reviewId,
+                userId
+            );
+
+            var { error } = ReviewResponse;
+            if (error) {
+                res.status(400).json({ error });
+            }
+
+            if (ReviewResponse.deletedCount === 0) {
+                throw new Error("Unable to delete review. User may not be the original poster.");
+            }
+
+            res.json({ status: "success" });
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    }
+}
+>>>>>>> 25dd4d301caa1c12e44f51a14144dd916e045a1e
