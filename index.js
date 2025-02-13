@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import app from './server.js'
 import mongodb from "mongodb"
 import dotenv from "dotenv" 
@@ -28,7 +27,7 @@ async function main(){
 }
 
 main().catch(console.error);
-=======
+
 import app from './server.js';
 import mongodb from 'mongodb';
 import dotenv from 'dotenv';
@@ -68,4 +67,3 @@ async function main() {
 
 // Run the main function
 main().catch(console.error);
->>>>>>> 25dd4d301caa1c12e44f51a14144dd916e045a1e
